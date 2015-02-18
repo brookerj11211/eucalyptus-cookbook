@@ -752,7 +752,10 @@ fi
 # OK, THIS IS THE BIG STEP!  Install whichever chef template we're going with here.
 # On successful exit, write "success" to faststart-successful.log.
 
-(chef-solo -r cookbooks.tgz -j $chef_template 1>>$LOGFILE && echo "success" > faststart-successful.log) &
+(
+http_proxy= https_proxy= HTTP_PROXY= HTTPS_PROXY= \
+    chef-solo -r cookbooks.tgz -j $chef_template 1>>$LOGFILE && echo "success" > faststart-successful.logI
+) &
 coffee $!
 
 if [[ ! -f faststart-successful.log ]]; then
